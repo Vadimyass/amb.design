@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anastasia Ambrosimova — Graphic Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #F5F0EB;
+  --bg-alt: #EDE6DF;
+  --text: #1A1815;
+  --text-muted: #6B6560;
+  --accent: #9B7E6B;
+  --accent-dark: #7A5F4E;
+  --white: #FFFFFF;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --gap: clamp(1rem, 3vw, 2rem);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== PRELOADER ===== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader-text {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--bg);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(245,240,235,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26,24,21,0.06);
+  transition: transform 0.4s ease;
+}
+nav.scrolled { box-shadow: 0 2px 30px rgba(0,0,0,0.05); }
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  width: 24px;
+  height: 1.5px;
+  background: var(--text);
+  transition: all 0.3s ease;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(6rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem) 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155,126,107,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: center;
+}
+.hero-text { z-index: 2; }
+.hero-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 1.5s forwards;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 1.7s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent-dark);
+}
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 1.9s forwards;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--text);
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 2.1s forwards;
+}
+.hero-cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.hero-cta svg { transition: transform 0.3s ease; }
+.hero-cta:hover svg { transform: translateX(4px); }
+
+.hero-image {
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 2s forwards;
+}
+.hero-image-wrapper {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+}
+.hero-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.05);
+}
+.hero-image-frame {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 60%;
+  height: 60%;
+  border: 1px solid var(--accent);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.hero-stats {
+  position: absolute;
+  bottom: 2rem;
+  left: -2rem;
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 2rem;
+}
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--accent-dark);
+}
+.hero-stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ===== SECTIONS ===== */
+section { padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 4rem); }
+.section-inner { max-width: 1400px; margin: 0 auto; }
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: clamp(2rem, 4vw, 4rem);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.15;
+}
+.section-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 400px;
+}
+
+/* ===== ABOUT ===== */
+#about { background: var(--white); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: start;
+}
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+.about-text p:first-of-type::first-letter {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  float: left;
+  line-height: 1;
+  margin-right: 0.5rem;
+  margin-top: 0.1rem;
+  color: var(--accent-dark);
+}
+.about-services {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.about-service {
+  padding: 1.5rem;
+  background: var(--bg);
+  transition: transform 0.3s ease;
+}
+.about-service:hover { transform: translateY(-4px); }
+.about-service h4 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.about-service p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 0 !important;
+}
+.about-service .price {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--accent-dark);
+  margin-top: 0.75rem;
+  display: block;
+}
+
+/* ===== PRICING ===== */
+#pricing { background: var(--bg); }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  align-items: stretch;
+}
+.pricing-card {
+  background: var(--white);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+  display: flex;
+  flex-direction: column;
+}
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+}
+.pricing-card.featured {
+  border: 2px solid var(--accent);
+}
+.pricing-card.featured .pricing-badge {
+  display: block;
+}
+.pricing-badge {
+  display: none;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+}
+.pricing-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  aspect-ratio: 3/1;
+  overflow: hidden;
+}
+.pricing-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.pricing-card:hover .pricing-images img { transform: scale(1.05); }
+.pricing-body {
+  padding: 2rem 2rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.pricing-name {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.pricing-price {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--accent-dark);
+  margin-bottom: 0.25rem;
+}
+.pricing-price span {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.pricing-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1rem 0 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(26,24,21,0.06);
+}
+.pricing-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.pricing-meta-val {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text);
+}
+.pricing-meta-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+.pricing-features li {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-left: 1.4rem;
+  position: relative;
+}
+.pricing-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.pricing-footer {
+  padding: 0 2rem 2rem;
+}
+.pricing-cta {
+  display: block;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid var(--text);
+  color: var(--text);
+  background: transparent;
+}
+.pricing-cta:hover {
+  background: var(--text);
+  color: var(--white);
+}
+.pricing-card.featured .pricing-cta {
+  background: var(--text);
+  color: var(--white);
+  border-color: var(--text);
+}
+.pricing-card.featured .pricing-cta:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+}
+
+/* pricing comparison table */
+.pricing-comparison {
+  margin-top: clamp(2rem, 4vw, 4rem);
+  background: var(--white);
+  overflow-x: auto;
+}
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.pricing-table thead th {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  border-bottom: 2px solid rgba(26,24,21,0.08);
+  background: var(--white);
+  position: sticky;
+  top: 0;
+}
+.pricing-table thead th:first-child {
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pricing-table tbody td {
+  padding: 1rem 1.25rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(26,24,21,0.04);
+  color: var(--text-muted);
+}
+.pricing-table tbody td:first-child {
+  text-align: left;
+  color: var(--text);
+  font-weight: 400;
+}
+.pricing-table tbody tr:hover { background: rgba(155,126,107,0.03); }
+.pricing-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(155,126,107,0.1);
+  color: var(--accent-dark);
+  font-size: 0.7rem;
+}
+.pricing-dash { color: rgba(26,24,21,0.15); font-size: 1.2rem; }
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+}
+
+/* ===== PORTFOLIO / PROJECTS ===== */
+#portfolio { background: var(--bg); }
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--gap);
+}
+.project-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--white);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+}
+.project-thumb {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.project-card:hover .project-thumb img { transform: scale(1.06); }
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,24,21,0.7) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+}
+.project-card:hover .project-overlay { opacity: 1; }
+.project-overlay-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.project-info { padding: 1.5rem; }
+.project-category {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.project-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.project-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.project-stats span { display: flex; align-items: center; gap: 0.3rem; }
+
+/* ===== REVIEWS ===== */
+#reviews { background: var(--white); }
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--gap);
+}
+.review-card {
+  padding: 2.5rem;
+  background: var(--bg);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.review-card:hover { transform: translateY(-4px); }
+.review-card::before {
+  content: '\201C';
+  font-family: var(--serif);
+  font-size: 5rem;
+  color: var(--accent);
+  opacity: 0.15;
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
+  line-height: 1;
+}
+.review-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+}
+.review-author-info h5 {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.review-author-info span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ===== CONTACT ===== */
+#contact {
+  background: var(--text);
+  color: var(--bg);
+}
+#contact .section-label { color: rgba(245,240,235,0.4); }
+#contact .section-title { color: var(--bg); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: start;
+}
+.contact-info p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(245,240,235,0.6);
+  margin-bottom: 2rem;
+}
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.95rem;
+  color: var(--bg);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(245,240,235,0.08);
+}
+.contact-link:hover { color: var(--accent); }
+.contact-link-icon {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(245,240,235,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.contact-form input,
+.contact-form textarea {
+  background: rgba(245,240,235,0.05);
+  border: 1px solid rgba(245,240,235,0.1);
+  padding: 1rem 1.25rem;
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: rgba(245,240,235,0.3); }
+.contact-form input:focus,
+.contact-form textarea:focus { border-color: var(--accent); }
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.contact-submit {
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg);
+  border: none;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.contact-submit:hover { background: var(--accent); color: var(--white); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--text);
+  padding: 2rem clamp(1.5rem, 5vw, 4rem);
+  border-top: 1px solid rgba(245,240,235,0.06);
+}
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba(245,240,235,0.35);
+}
+.footer-social { display: flex; gap: 1rem; }
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(245,240,235,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(245,240,235,0.5);
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+}
+.footer-social a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MOBILE NAV ===== */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--bg);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; }
+.mobile-menu a {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.mobile-menu a:hover { color: var(--accent); }
+
+/* ===== PROJECT DETAIL MODAL ===== */
+.proj-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  background: rgba(26,24,21,0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  overflow-y: auto;
+  padding: 2rem 1rem;
+}
+.proj-overlay.open { opacity: 1; visibility: visible; }
+.proj-modal {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--white);
+  animation: briefSlideUp 0.5s ease;
+}
+.proj-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--white);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text);
+  z-index: 1002;
+  transition: transform 0.3s ease;
+}
+.proj-close:hover { transform: scale(1.1); }
+.proj-hero {
+  position: relative;
+  overflow: hidden;
+}
+.proj-hero img {
+  width: 100%;
+  display: block;
+}
+.proj-header {
+  padding: 2.5rem 3rem 2rem;
+  border-bottom: 1px solid rgba(26,24,21,0.06);
+}
+.proj-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.proj-cat {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.proj-h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.15;
+}
+.proj-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.proj-meta-item {
+  text-align: center;
+}
+.proj-meta-val {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--accent-dark);
+}
+.proj-meta-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.proj-body {
+  padding: 2rem 3rem;
+}
+.proj-desc {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin-bottom: 2rem;
+}
+.proj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 2.5rem;
+}
+.proj-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.9rem;
+  background: var(--bg);
+  color: var(--text-muted);
+}
+.proj-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.proj-gallery img {
+  width: 100%;
+  display: block;
+}
+.proj-footer {
+  padding: 2rem 3rem;
+  border-top: 1px solid rgba(26,24,21,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.proj-behance-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--text);
+  padding: 0.85rem 2rem;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.proj-behance-link:hover { background: var(--accent-dark); }
+.proj-nav-btns { display: flex; gap: 0.5rem; }
+.proj-nav-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(26,24,21,0.12);
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+.proj-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 600px) {
+  .proj-header, .proj-body, .proj-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+/* ===== BRIEF MODAL ===== */
+.brief-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(26,24,21,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  padding: 1.5rem;
+}
+.brief-overlay.open { opacity: 1; visibility: visible; }
+.brief-modal {
+  background: var(--white);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: briefSlideUp 0.5s ease;
+}
+@keyframes briefSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.brief-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(26,24,21,0.1);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+.brief-close:hover { border-color: var(--text); color: var(--text); }
+.brief-header {
+  padding: 2.5rem 2.5rem 0;
+}
+.brief-header-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.brief-header h2 {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+.brief-header p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Steps progress */
+.brief-progress {
+  display: flex;
+  gap: 4px;
+  padding: 1.5rem 2.5rem;
+}
+.brief-progress-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(26,24,21,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.brief-progress-bar.active {
+  background: var(--accent);
+}
+.brief-progress-bar.done {
+  background: var(--accent-dark);
+}
+
+/* Steps */
+.brief-step {
+  display: none;
+  padding: 0 2.5rem 2rem;
+}
+.brief-step.active { display: block; }
+.brief-step-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(26,24,21,0.06);
+}
+.brief-step-title span {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.brief-field {
+  margin-bottom: 1.25rem;
+}
+.brief-field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.brief-field label .req {
+  color: var(--accent);
+  margin-left: 2px;
+}
+.brief-field input[type="text"],
+.brief-field input[type="email"],
+.brief-field input[type="url"],
+.brief-field input[type="tel"],
+.brief-field textarea,
+.brief-field select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(26,24,21,0.1);
+  background: var(--bg);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.brief-field input:focus,
+.brief-field textarea:focus,
+.brief-field select:focus {
+  border-color: var(--accent);
+}
+.brief-field textarea { resize: vertical; min-height: 90px; }
+.brief-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236B6560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+.brief-field .hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  line-height: 1.5;
+}
+
+/* Checkbox / Radio groups */
+.brief-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.brief-option {
+  position: relative;
+}
+.brief-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.brief-option label {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(26,24,21,0.1);
+  background: var(--bg);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 0;
+}
+.brief-option input:checked + label {
+  border-color: var(--accent);
+  background: rgba(155,126,107,0.08);
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+.brief-option label:hover {
+  border-color: rgba(155,126,107,0.4);
+}
+
+/* Color swatches */
+.brief-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.brief-color-opt {
+  position: relative;
+}
+.brief-color-opt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.brief-color-opt label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(26,24,21,0.1);
+  background: var(--bg);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 0;
+}
+.brief-color-opt input:checked + label {
+  border-color: var(--accent);
+  background: rgba(155,126,107,0.08);
+}
+.brief-color-opt label:hover {
+  border-color: rgba(155,126,107,0.4);
+}
+.brief-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+/* Style scale */
+.brief-scale {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 0.25rem;
+}
+.brief-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+.brief-scale input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: linear-gradient(to right, var(--accent) 0%, rgba(26,24,21,0.08) 100%);
+  border-radius: 2px;
+  outline: none;
+}
+.brief-scale input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-dark);
+  cursor: pointer;
+  border: 2px solid var(--white);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Footer */
+.brief-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2.5rem 2.5rem;
+  gap: 1rem;
+}
+.brief-btn {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+.brief-btn-back {
+  background: none;
+  color: var(--text-muted);
+  padding-left: 0;
+}
+.brief-btn-back:hover { color: var(--text); }
+.brief-btn-next {
+  background: var(--text);
+  color: var(--white);
+  margin-left: auto;
+}
+.brief-btn-next:hover { background: var(--accent-dark); }
+.brief-btn-submit {
+  background: var(--accent-dark);
+  color: var(--white);
+  margin-left: auto;
+}
+.brief-btn-submit:hover { background: var(--text); }
+
+/* Success state */
+.brief-success {
+  display: none;
+  text-align: center;
+  padding: 4rem 2.5rem;
+}
+.brief-success.active { display: block; }
+.brief-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(155,126,107,0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.brief-success h3 {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: 0.75rem;
+}
+.brief-success p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Two-col field row */
+.brief-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .brief-modal { max-height: 95vh; }
+  .brief-header, .brief-step, .brief-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .brief-row { grid-template-columns: 1fr; }
+}
+
+
+/* ===== LANG SWITCHER ===== */
+.lang-switch {
+  display: flex;
+  gap: 2px;
+  margin-left: 1rem;
+  border: 1px solid rgba(26,24,21,0.1);
+}
+.lang-btn {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.55rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.lang-btn.active {
+  background: var(--text);
+  color: var(--white);
+}
+.lang-btn:hover:not(.active) { color: var(--text); }
+@media (max-width: 900px) {
+  .lang-switch { position: absolute; top: 1.5rem; right: 4.5rem; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-menu { display: flex; }
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-image { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-services { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .hero-stats { display: none; }
+}
+@media (max-width: 600px) {
+  .reviews-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <span class="preloader-text">amb.design</span>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()" data-i18n="nav_about">About</a>
+  <a href="#pricing" onclick="closeMobile()" data-i18n="nav_pricing">Pricing</a>
+  <a href="#portfolio" onclick="closeMobile()" data-i18n="nav_portfolio">Portfolio</a>
+  <a href="#reviews" onclick="closeMobile()" data-i18n="nav_reviews">Reviews</a>
+  <a href="#contact" onclick="closeMobile()" data-i18n="nav_contact">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Anastasia Ambrosimova</a>
+  <div class="nav-links">
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+    <a href="#portfolio" data-i18n="nav_portfolio">Portfolio</a>
+    <a href="#reviews" data-i18n="nav_reviews">Reviews</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </div>
+  <div class="lang-switch" id="langSwitch"><button class="lang-btn active" onclick="setLang('en')">EN</button><button class="lang-btn" onclick="setLang('uk')">UA</button><button class="lang-btn" onclick="setLang('ru')">RU</button></div>
+  <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-label" data-i18n="hero_label">Graphic Designer — Odesa, Ukraine</div>
+      <h1 class="hero-title" data-i18n-html="hero_title">Creating <em>brands</em> that stand out</h1>
+      <p class="hero-desc" data-i18n="hero_desc">I specialize in logo creation, brand identity development, and packaging design. Let's build a visual identity that's both modern and memorable.</p>
+      <a href="#contact" class="hero-cta">
+        <span data-i18n="hero_cta">Get in Touch</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-image">
+      <div class="hero-image-wrapper">
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/949e1d242430763.696d33f5a6aa5.png" alt="Brand identity project showcase">
+        <div class="hero-image-frame"></div>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">986+</div>
+          <div class="hero-stat-label" data-i18n="hero_stat_likes">Appreciations</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">4.1K</div>
+          <div class="hero-stat-label" data-i18n="hero_stat_views">Project Views</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label" data-i18n="about_label">01 / About</div>
+        <h2 class="section-title" data-i18n="about_title">A little about me</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p data-i18n="about_p1">My name is Anastasia, and I'm a graphic designer specializing in logo creation, brand identity development, and packaging design for your brand. I would be happy to help you create a unique visual identity that is both modern and memorable.</p>
+        <p data-i18n="about_p2">Based in Odesa, Ukraine, I work with clients worldwide to bring their visions to life. Every project is a chance to tell a story through design — from elegant cosmetic clinics to vibrant flower shops and bold fashion labels.</p>
+        <p data-i18n="about_p3">I use Figma, Adobe Illustrator, and Photoshop to craft every detail with precision and care. Reach out to me, and we'll make your project stand out.</p>
+      </div>
+      <div class="about-services reveal">
+        <div class="about-service">
+          <h4 data-i18n="svc1_title">Logo Design</h4>
+          <p data-i18n="svc1_desc">Custom logotypes — from minimal wordmarks to detailed brand marks</p>
+        </div>
+        <div class="about-service">
+          <h4 data-i18n="svc2_title">Brand Identity</h4>
+          <p data-i18n="svc2_desc">Complete visual systems: logo, colors, typography, patterns, guidelines</p>
+        </div>
+        <div class="about-service">
+          <h4 data-i18n="svc3_title">Packaging Design</h4>
+          <p data-i18n="svc3_desc">Product packaging and labels that tell your story on the shelf</p>
+        </div>
+        <div class="about-service">
+          <h4 data-i18n="svc4_title">Social Media</h4>
+          <p data-i18n="svc4_desc">Branded templates and visual content for your social channels</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label" data-i18n="pricing_label">02 / Pricing</div>
+        <h2 class="section-title" data-i18n="pricing_title">Services & rates</h2>
+      </div>
+      <p class="section-subtitle" data-i18n="pricing_subtitle">Transparent pricing for every stage of your brand journey</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- LOGOTYPE STANDARD -->
+      <div class="pricing-card reveal">
+        <div class="pricing-images">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/07bf7a241752689.Y3JvcCw1NzUzLDQ1MDAsMTAxMSww.png" alt="Apostle logo">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/925f21241820019.Y3JvcCw0NTQ4LDM1NTcsMTczMyw4MjE.png" alt="Verona logo">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/2e9194231172189.Y3JvcCw1NzUzLDQ1MDAsMjIzNSww.png" alt="Interior Design Studio logo">
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-name" data-i18n="price_std_name">Logotype Standard</div>
+          <div class="pricing-price">$250 <span>starting from</span></div>
+          <div class="pricing-meta">
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">2</span>
+              <span class="pricing-meta-label" data-i18n="meta_concepts">Concepts</span>
+            </div>
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">3</span>
+              <span class="pricing-meta-label" data-i18n="meta_revisions">Revisions</span>
+            </div>
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">&lt; 1 week</span>
+              <span class="pricing-meta-label" data-i18n="meta_delivery">Delivery</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li>2 logo concepts to choose from</li>
+            <li>3 free revisions within the brief</li>
+            <li>Basic brand color system RGB & CMYK</li>
+            <li>Logo formats for web and print</li>
+            <li>Detailed presentation with visualization</li>
+            <li>Names of brand colors and fonts</li>
+          </ul>
+        </div>
+        <div class="pricing-footer">
+          <a href="javascript:void(0)" onclick="openBrief('standard')" class="pricing-cta" data-i18n="price_cta">Get Started</a>
+        </div>
+      </div>
+
+      <!-- LOGOTYPE PREMIUM -->
+      <div class="pricing-card featured reveal">
+        <span class="pricing-badge">Popular</span>
+        <div class="pricing-images">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/468eb3242058529.Y3JvcCw1NzUzLDQ1MDAsMCww.png" alt="Barbershop Frame logo">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/3047f3242064033.Y3JvcCwzNzYxLDI5NDEsNDA4Nyww.png" alt="Vela Pera logo">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/3e93c6218102933.Y3JvcCwzMjc4LDI1NjQsMzQ4LDIxOQ.jpg" alt="Freedom Floral logo">
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-name" data-i18n="price_prem_name">Logotype Premium</div>
+          <div class="pricing-price">$330 <span>starting from</span></div>
+          <div class="pricing-meta">
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">3–4</span>
+              <span class="pricing-meta-label">Concepts</span>
+            </div>
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">5</span>
+              <span class="pricing-meta-label">Revisions</span>
+            </div>
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">1–2 weeks</span>
+              <span class="pricing-meta-label">Delivery</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li>3–4 logo concepts to choose from</li>
+            <li>5 free revisions within the brief</li>
+            <li>Basic brand color system RGB & CMYK</li>
+            <li>Logo formats for web and print</li>
+            <li>Detailed presentation with visualization</li>
+            <li>Names of brand colors and fonts</li>
+          </ul>
+        </div>
+        <div class="pricing-footer">
+          <a href="javascript:void(0)" onclick="openBrief('premium')" class="pricing-cta" data-i18n="price_cta">Get Started</a>
+        </div>
+      </div>
+
+      <!-- BRAND IDENTITY -->
+      <div class="pricing-card reveal">
+        <div class="pricing-images">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/7fc6f4242188265.Y3JvcCw1NzUzLDQ1MDAsMTEyNSww.png" alt="Magic Soul brand">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/5257af235426107.Y3JvcCw1NzUzLDQ1MDAsMTIxMCww.png" alt="Ampluar brand">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808/2c673d222940173.Y3JvcCw1NzUzLDQ1MDAsMTAyNSww.jpg" alt="Madlen brand">
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-name" data-i18n="price_id_name">Brand Identity</div>
+          <div class="pricing-price">$450 <span>starting from</span></div>
+          <div class="pricing-meta">
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">3–4</span>
+              <span class="pricing-meta-label">Concepts</span>
+            </div>
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">7</span>
+              <span class="pricing-meta-label">Revisions</span>
+            </div>
+            <div class="pricing-meta-item">
+              <span class="pricing-meta-val">1 month</span>
+              <span class="pricing-meta-label">Delivery</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li>3–4 logo concepts to choose from</li>
+            <li>7 free revisions within the entire brand identity</li>
+            <li>Basic brand color system RGB & CMYK</li>
+            <li>Logo formats for web and print</li>
+            <li>Four brand identity items (tag, business card, certificate, etc.)</li>
+            <li>Brand graphics & pattern</li>
+            <li>Detailed presentation with visualization</li>
+            <li>Names of brand colors and fonts</li>
+            <li>Items prepared for print</li>
+          </ul>
+        </div>
+        <div class="pricing-footer">
+          <a href="javascript:void(0)" onclick="openBrief('identity')" class="pricing-cta" data-i18n="price_cta">Get Started</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="pricing-comparison reveal">
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>What's included</th>
+            <th>Standard<br><small style="color:var(--accent);font-family:var(--serif);font-size:0.95rem;">$250</small></th>
+            <th>Premium<br><small style="color:var(--accent);font-family:var(--serif);font-size:0.95rem;">$330</small></th>
+            <th>Brand Identity<br><small style="color:var(--accent);font-family:var(--serif);font-size:0.95rem;">$450</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Logo concepts</td>
+            <td>2</td>
+            <td>3–4</td>
+            <td>3–4</td>
+          </tr>
+          <tr>
+            <td>Free revisions</td>
+            <td>3</td>
+            <td>5</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>Color system (RGB & CMYK)</td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Logo formats (web & print)</td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Presentation with visualization</td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Brand colors & fonts naming</td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+            <td><span class="pricing-check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Brand identity items (tag, card, etc.)</td>
+            <td><span class="pricing-dash">—</span></td>
+            <td><span class="pricing-dash">—</span></td>
+            <td>4 items</td>
+          </tr>
+          <tr>
+            <td>Brand graphics & pattern</td>
+            <td><span class="pricing-dash">—</span></td>
+            <td><span class="pricing-dash">—</span></td>
+            <td><span class="pricing-check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Print-ready files</td>
+            <td><span class="pricing-dash">—</span></td>
+            <td><span class="pricing-dash">—</span></td>
+            <td><span class="pricing-check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Delivery time</td>
+            <td>&lt; 1 week</td>
+            <td>1–2 weeks</td>
+            <td>~1 month</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label" data-i18n="portfolio_label">03 / Portfolio</div>
+        <h2 class="section-title" data-i18n="portfolio_title">Selected projects</h2>
+      </div>
+      <p class="section-subtitle" data-i18n="portfolio_subtitle">A curated selection of branding and identity projects from Behance</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="project-card reveal" onclick="openProj(0)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/436e31242430763.Y3JvcCwzNzYxLDI5NDEsMjE5Nyw3NTQ.png" alt="Bulytska Clinic Logo">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Cosmetology / Branding</div>
+          <div class="project-name">Bulytska Clinic</div>
+          <div class="project-stats">
+            <span>♥ 64</span>
+            <span>👁 232</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(1)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/6444f9242341705.Y3JvcCw1NzUzLDQ1MDAsMTIzOCww.png" alt="Bloom & Charm Logotype">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Flower Shop / Logo</div>
+          <div class="project-name">Bloom & Charm</div>
+          <div class="project-stats">
+            <span>♥ 202</span>
+            <span>👁 1,027</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(2)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/7fc6f4242188265.Y3JvcCw1NzUzLDQ1MDAsMTEyNSww.png" alt="Magic Soul Logotype">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Esoteric / Branding</div>
+          <div class="project-name">Magic Soul</div>
+          <div class="project-stats">
+            <span>♥ 66</span>
+            <span>👁 185</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(3)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/3047f3242064033.Y3JvcCwzNzYxLDI5NDEsNDA4Nyww.png" alt="Vela Pera Logotype">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Clothing Brand / Logo</div>
+          <div class="project-name">Vela Pera</div>
+          <div class="project-stats">
+            <span>♥ 225</span>
+            <span>👁 1,164</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(4)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/468eb3242058529.Y3JvcCw1NzUzLDQ1MDAsMCww.png" alt="Barbershop Frame Logotype">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Barbershop / Logo</div>
+          <div class="project-name">Frame Barbershop</div>
+          <div class="project-stats">
+            <span>♥ 54</span>
+            <span>👁 368</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(5)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/925f21241820019.Y3JvcCw0NTQ4LDM1NTcsMTczMyw4MjE.png" alt="Verona Permanent Makeup">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Beauty / Logo</div>
+          <div class="project-name">Verona Permanent Makeup</div>
+          <div class="project-stats">
+            <span>♥ 22</span>
+            <span>👁 57</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(6)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/07bf7a241752689.Y3JvcCw1NzUzLDQ1MDAsMTAxMSww.png" alt="Apostle Logo">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Windows & Doors / Logo</div>
+          <div class="project-name">Apostle</div>
+          <div class="project-stats">
+            <span>♥ 157</span>
+            <span>👁 194</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(7)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/5257af235426107.Y3JvcCw1NzUzLDQ1MDAsMTIxMCww.png" alt="Ampluar Jewelry Brand">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Jewelry / Packaging</div>
+          <div class="project-name">Ampluar</div>
+          <div class="project-stats">
+            <span>♥ 10</span>
+            <span>👁 33</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(8)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/2c673d222940173.Y3JvcCw1NzUzLDQ1MDAsMTAyNSww.jpg" alt="Madlen Coffee & Pastry">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Café & Confectionery / Brand</div>
+          <div class="project-name">Madlen</div>
+          <div class="project-stats">
+            <span>♥ 69</span>
+            <span>👁 123</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" onclick="openProj(9)">
+        <div class="project-thumb">
+          <img src="https://mir-s3-cdn-cf.behance.net/projects/404/3e93c6218102933.Y3JvcCwzMjc4LDI1NjQsMzQ4LDIxOQ.jpg" alt="Freedom Floral">
+          <div class="project-overlay">
+            <span class="project-overlay-text">View on Behance <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+        <div class="project-info">
+          <div class="project-category">Flower Boutique / Identity</div>
+          <div class="project-name">Freedom Floral</div>
+          <div class="project-stats">
+            <span>♥ 32</span>
+            <span>👁 220</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label" data-i18n="reviews_label">04 / Reviews</div>
+        <h2 class="section-title" data-i18n="reviews_title">Client feedback</h2>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <p class="review-text">Anastasia designed an incredible logo for my cosmetology clinic. She immediately understood the aesthetic I was going for — clean, elegant, and professional. The final result exceeded all my expectations.</p>
+        <div class="review-author">
+          <div class="review-avatar">O</div>
+          <div class="review-author-info">
+            <h5>Olena B.</h5>
+            <span>Bulytska Clinic, Cosmetology</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <p class="review-text">Working with Nastia was an absolute pleasure. She developed a complete brand identity for our flower shop — from the logotype to packaging. Every element feels cohesive and truly represents our brand.</p>
+        <div class="review-author">
+          <div class="review-avatar">K</div>
+          <div class="review-author-info">
+            <h5>Kateryna M.</h5>
+            <span>Bloom & Charm, Flower Shop</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal">
+        <p class="review-text">We needed a logo for our clothing brand that conveyed both sophistication and approachability. Anastasia nailed it from the first concept. Highly professional, responsive, and creative.</p>
+        <div class="review-author">
+          <div class="review-avatar">D</div>
+          <div class="review-author-info">
+            <h5>Daria V.</h5>
+            <span>Vela Pera, Clothing Brand</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-label" data-i18n="contact_label">05 / Contact</div>
+        <h2 class="section-title" data-i18n="contact_title">Let's work together</h2>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p data-i18n="contact_desc">Have a project in mind? I'm always open to new opportunities and interesting collaborations. Reach out through any of the channels below or use the form.</p>
+        <div class="contact-links">
+          <a href="https://www.instagram.com/amb.designn" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            </div>
+            @amb.designn
+          </a>
+          <a href="https://t.me/nastiamb" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </div>
+            @nastiamb
+          </a>
+          <a href="https://www.behance.net/nastiaambrosi" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 11c1.38 0 2.5-1.12 2.5-2.5S8.88 6 7.5 6H3v5h4.5zm0-3.5c.55 0 1 .45 1 1s-.45 1-1 1H5V7.5h2.5zM8 13H3v5h5c1.38 0 2.5-1.12 2.5-2.5S9.38 13 8 13zm0 3.5H5v-2h3c.55 0 1 .45 1 1s-.45 1-1 1zM17.5 6h-5v1.5h5V6zM19 10c-2.21 0-4 1.79-4 4s1.79 4 4 4c1.38 0 2.6-.7 3.32-1.76l-1.34-.94C20.54 16.26 19.82 16.5 19 16.5c-1.1 0-2-.69-2.36-1.66h5.86c.04-.27.05-.55.05-.84 0-2.21-1.79-4-4-4v-1h.01V10zm-2.36 3.16c.36-.98 1.26-1.66 2.36-1.66s2 .69 2.36 1.66h-4.72z"/></svg>
+            </div>
+            behance.net/nastiaambrosi
+          </a>
+        </div>
+      </div>
+      <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent.');">
+        <input type="text" placeholder="Your name" data-i18n-ph="cf_name" required>
+        <input type="email" placeholder="Email address" data-i18n-ph="cf_email" required>
+        <input type="text" placeholder="Project type (e.g. Logo, Brand Identity)" data-i18n-ph="cf_project">
+        <textarea placeholder="Tell me about your project..." data-i18n-ph="cf_message"></textarea>
+        <button type="submit" class="contact-submit" data-i18n="cf_submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy" data-i18n-html="footer_copy">&copy; 2026 Anastasia Ambrosimova. All rights reserved.</div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/amb.designn" target="_blank" aria-label="Instagram">IG</a>
+      <a href="https://t.me/nastiamb" target="_blank" aria-label="Telegram">TG</a>
+      <a href="https://www.behance.net/nastiaambrosi" target="_blank" aria-label="Behance">Be</a>
+    </div>
+  </div>
+</footer>
+
+<!-- PROJECT DETAIL MODAL -->
+<div class="proj-overlay" id="projOverlay" onclick="if(event.target===this)closeProj()">
+  <div class="proj-modal" id="projModal"></div>
+  <button class="proj-close" onclick="closeProj()" aria-label="Close">✕</button>
+</div>
+
+<!-- BRIEF MODAL -->
+<div class="brief-overlay" id="briefOverlay" onclick="if(event.target===this)closeBrief()">
+  <div class="brief-modal" id="briefModal">
+    <button class="brief-close" onclick="closeBrief()" aria-label="Close">✕</button>
+
+    <div class="brief-header">
+      <div class="brief-header-label" data-i18n="brief_label">Design Brief</div>
+      <h2 id="briefTitle" data-i18n="brief_title">Let's start your project</h2>
+      <p data-i18n="brief_subtitle">Fill out this brief so I can better understand your vision and prepare the best concepts for you.</p>
+    </div>
+
+    <div class="brief-progress" id="briefProgress">
+      <div class="brief-progress-bar active"></div>
+      <div class="brief-progress-bar"></div>
+      <div class="brief-progress-bar"></div>
+      <div class="brief-progress-bar"></div>
+      <div class="brief-progress-bar"></div>
+    </div>
+
+    <!-- STEP 1: Contact info -->
+    <div class="brief-step active" data-step="1">
+      <div class="brief-step-title"><span>Step 1 of 5</span>Contact Information</div>
+      <div class="brief-row">
+        <div class="brief-field">
+          <label>Your name <span class="req">*</span></label>
+          <input type="text" id="clientName" placeholder="e.g. Maria Ivanova" required>
+        </div>
+        <div class="brief-field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" id="clientEmail" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-field">
+          <label>Telegram / WhatsApp</label>
+          <input type="text" id="clientTg" placeholder="@username or phone number">
+        </div>
+        <div class="brief-field">
+          <label>Instagram</label>
+          <input type="text" id="clientInsta" placeholder="@youraccount">
+        </div>
+      </div>
+      <div class="brief-field">
+        <label>Selected service</label>
+        <select id="briefService">
+          <option value="">Choose a service...</option>
+          <option value="Logotype Standard — $250">Logotype Standard — from $250</option>
+          <option value="Logotype Premium — $330">Logotype Premium — from $330</option>
+          <option value="Brand Identity — $450">Brand Identity — from $450</option>
+          <option value="Packaging Design">Packaging Design — on request</option>
+          <option value="Other">Other / Not sure yet</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- STEP 2: About the business -->
+    <div class="brief-step" data-step="2">
+      <div class="brief-step-title"><span>Step 2 of 5</span>About Your Business</div>
+      <div class="brief-field">
+        <label>Company / Brand name <span class="req">*</span></label>
+        <input type="text" id="clientBrand" placeholder="e.g. Bloom & Charm">
+      </div>
+      <div class="brief-field">
+        <label>Industry / Niche <span class="req">*</span></label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="checkbox" id="ind1" name="industry"><label for="ind1">Beauty & Wellness</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind2" name="industry"><label for="ind2">Fashion & Clothing</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind3" name="industry"><label for="ind3">Food & Beverages</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind4" name="industry"><label for="ind4">Flowers & Events</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind5" name="industry"><label for="ind5">Healthcare</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind6" name="industry"><label for="ind6">Interior & Architecture</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind7" name="industry"><label for="ind7">Jewelry & Accessories</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind8" name="industry"><label for="ind8">Technology</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind9" name="industry"><label for="ind9">Education</label></div>
+          <div class="brief-option"><input type="checkbox" id="ind10" name="industry"><label for="ind10">Other</label></div>
+        </div>
+      </div>
+      <div class="brief-field">
+        <label>Describe your business in a few sentences <span class="req">*</span></label>
+        <textarea id="clientDesc" placeholder="What do you do? Who are your customers? What makes you different from competitors?"></textarea>
+      </div>
+      <div class="brief-field">
+        <label>Your website or social media (if any)</label>
+        <input type="url" id="clientWebsite" placeholder="https://...">
+      </div>
+    </div>
+
+    <!-- STEP 3: Design preferences -->
+    <div class="brief-step" data-step="3">
+      <div class="brief-step-title"><span>Step 3 of 5</span>Design Preferences</div>
+
+      <div class="brief-field">
+        <label>How would you describe the style you want?</label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="checkbox" id="st1" name="style"><label for="st1">Minimalist</label></div>
+          <div class="brief-option"><input type="checkbox" id="st2" name="style"><label for="st2">Elegant & Luxurious</label></div>
+          <div class="brief-option"><input type="checkbox" id="st3" name="style"><label for="st3">Bold & Modern</label></div>
+          <div class="brief-option"><input type="checkbox" id="st4" name="style"><label for="st4">Playful & Friendly</label></div>
+          <div class="brief-option"><input type="checkbox" id="st5" name="style"><label for="st5">Classic & Timeless</label></div>
+          <div class="brief-option"><input type="checkbox" id="st6" name="style"><label for="st6">Natural & Organic</label></div>
+          <div class="brief-option"><input type="checkbox" id="st7" name="style"><label for="st7">Feminine & Soft</label></div>
+          <div class="brief-option"><input type="checkbox" id="st8" name="style"><label for="st8">Masculine & Strong</label></div>
+          <div class="brief-option"><input type="checkbox" id="st9" name="style"><label for="st9">Retro / Vintage</label></div>
+          <div class="brief-option"><input type="checkbox" id="st10" name="style"><label for="st10">Handwritten / Calligraphic</label></div>
+        </div>
+      </div>
+
+      <div class="brief-field">
+        <label>Preferred color palette</label>
+        <div class="brief-colors">
+          <div class="brief-color-opt"><input type="checkbox" id="c1" name="color"><label for="c1"><span class="brief-swatch" style="background:#1A1815"></span> Black</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c2" name="color"><label for="c2"><span class="brief-swatch" style="background:#9B7E6B"></span> Beige / Nude</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c3" name="color"><label for="c3"><span class="brief-swatch" style="background:#C9A87C"></span> Gold</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c4" name="color"><label for="c4"><span class="brief-swatch" style="background:#7A9E7E"></span> Green</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c5" name="color"><label for="c5"><span class="brief-swatch" style="background:#6B8EB5"></span> Blue</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c6" name="color"><label for="c6"><span class="brief-swatch" style="background:#C27B7B"></span> Terracotta / Pink</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c7" name="color"><label for="c7"><span class="brief-swatch" style="background:#F5F0EB"></span> White / Light</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c8" name="color"><label for="c8"><span class="brief-swatch" style="background:#8B6AAE"></span> Purple</label></div>
+          <div class="brief-color-opt"><input type="checkbox" id="c9" name="color"><label for="c9"><span class="brief-swatch" style="background:linear-gradient(135deg,#ff6b6b,#4ecdc4,#45b7d1)"></span> Not sure / Trust designer</label></div>
+        </div>
+      </div>
+
+      <div class="brief-field" style="margin-top:0.5rem">
+        <label>Brand character — where do you see yourself?</label>
+        <div style="margin-bottom:0.75rem">
+          <div class="brief-scale-labels"><span>Feminine</span><span>Neutral</span><span>Masculine</span></div>
+          <div class="brief-scale"><input type="range" id="scaleFemMasc" min="1" max="5" value="3"></div>
+        </div>
+        <div style="margin-bottom:0.75rem">
+          <div class="brief-scale-labels"><span>Playful</span><span>Balanced</span><span>Serious</span></div>
+          <div class="brief-scale"><input type="range" id="scalePlaySerious" min="1" max="5" value="3"></div>
+        </div>
+        <div>
+          <div class="brief-scale-labels"><span>Classic</span><span>Versatile</span><span>Modern</span></div>
+          <div class="brief-scale"><input type="range" id="scaleClassModern" min="1" max="5" value="3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Logo specifics -->
+    <div class="brief-step" data-step="4">
+      <div class="brief-step-title"><span>Step 4 of 5</span>Logo Details</div>
+
+      <div class="brief-field">
+        <label>What type of logo are you looking for?</label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="radio" id="lt1" name="logotype"><label for="lt1">Text only (wordmark)</label></div>
+          <div class="brief-option"><input type="radio" id="lt2" name="logotype"><label for="lt2">Text + icon/symbol</label></div>
+          <div class="brief-option"><input type="radio" id="lt3" name="logotype"><label for="lt3">Icon / symbol only</label></div>
+          <div class="brief-option"><input type="radio" id="lt4" name="logotype"><label for="lt4">Monogram / initials</label></div>
+          <div class="brief-option"><input type="radio" id="lt5" name="logotype"><label for="lt5">Not sure — trust the designer</label></div>
+        </div>
+      </div>
+
+      <div class="brief-field">
+        <label>Should any specific elements be included in the logo?</label>
+        <textarea id="clientElements" placeholder="e.g. flower, leaf, crown, abstract shapes, specific letters..."></textarea>
+        <div class="hint">Describe any symbols, objects, or motifs that are meaningful to your brand</div>
+      </div>
+
+      <div class="brief-field">
+        <label>Where will the logo primarily be used?</label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="checkbox" id="use1" name="usage"><label for="use1">Social media</label></div>
+          <div class="brief-option"><input type="checkbox" id="use2" name="usage"><label for="use2">Website</label></div>
+          <div class="brief-option"><input type="checkbox" id="use3" name="usage"><label for="use3">Business cards</label></div>
+          <div class="brief-option"><input type="checkbox" id="use4" name="usage"><label for="use4">Packaging</label></div>
+          <div class="brief-option"><input type="checkbox" id="use5" name="usage"><label for="use5">Signage</label></div>
+          <div class="brief-option"><input type="checkbox" id="use6" name="usage"><label for="use6">Clothing / Merch</label></div>
+          <div class="brief-option"><input type="checkbox" id="use7" name="usage"><label for="use7">Print materials</label></div>
+        </div>
+      </div>
+
+      <div class="brief-field">
+        <label>Links to logos/brands you like (references)</label>
+        <textarea id="clientRefs" placeholder="Paste links to Pinterest boards, Behance projects, Instagram pages, or any designs that resonate with your vision..."></textarea>
+        <div class="hint">The more references the better — it helps me understand your taste</div>
+      </div>
+    </div>
+
+    <!-- STEP 5: Additional info -->
+    <div class="brief-step" data-step="5">
+      <div class="brief-step-title"><span>Step 5 of 5</span>Final Details</div>
+
+      <div class="brief-field">
+        <label>Desired deadline</label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="radio" id="dl1" name="deadline"><label for="dl1">ASAP</label></div>
+          <div class="brief-option"><input type="radio" id="dl2" name="deadline"><label for="dl2">1–2 weeks</label></div>
+          <div class="brief-option"><input type="radio" id="dl3" name="deadline"><label for="dl3">1 month</label></div>
+          <div class="brief-option"><input type="radio" id="dl4" name="deadline"><label for="dl4">No rush</label></div>
+        </div>
+      </div>
+
+      <div class="brief-field">
+        <label>Budget range</label>
+        <select id="clientBudget">
+          <option value="">Select range...</option>
+          <option value="250-330">$250 – $330 (Logotype)</option>
+          <option value="330-450">$330 – $450 (Premium / Identity)</option>
+          <option value="450-700">$450 – $700 (Extended Identity)</option>
+          <option value="700+">$700+ (Full branding package)</option>
+          <option value="discuss">Let's discuss</option>
+        </select>
+      </div>
+
+      <div class="brief-field">
+        <label>Do you have an existing logo or brand materials?</label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="radio" id="ex1" name="existing"><label for="ex1">Yes — I'll share them</label></div>
+          <div class="brief-option"><input type="radio" id="ex2" name="existing"><label for="ex2">No — starting from scratch</label></div>
+          <div class="brief-option"><input type="radio" id="ex3" name="existing"><label for="ex3">Yes, but need a complete redesign</label></div>
+        </div>
+      </div>
+
+      <div class="brief-field">
+        <label>Anything else you'd like me to know?</label>
+        <textarea id="clientNotes" placeholder="Additional thoughts, ideas, concerns, or special requests..."></textarea>
+      </div>
+
+      <div class="brief-field">
+        <label>How did you find me?</label>
+        <div class="brief-options">
+          <div class="brief-option"><input type="checkbox" id="src1" name="source"><label for="src1">Instagram</label></div>
+          <div class="brief-option"><input type="checkbox" id="src2" name="source"><label for="src2">Behance</label></div>
+          <div class="brief-option"><input type="checkbox" id="src3" name="source"><label for="src3">Recommendation</label></div>
+          <div class="brief-option"><input type="checkbox" id="src4" name="source"><label for="src4">Google Search</label></div>
+          <div class="brief-option"><input type="checkbox" id="src5" name="source"><label for="src5">Other</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="brief-success" id="briefSuccess">
+      <div class="brief-success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7A5F4E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 data-i18n="brief_success_title">Brief sent!</h3>
+      <p data-i18n="brief_success_desc">Thank you! I've received your brief and will review it within 24 hours. I'll reach out to discuss your project soon.</p>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <div class="brief-footer" id="briefFooter">
+      <button class="brief-btn brief-btn-back" id="briefBack" onclick="briefPrev()" style="visibility:hidden" data-i18n="brief_back">← Back</button>
+      <button class="brief-btn brief-btn-next" id="briefNext" onclick="briefNext()">Next →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ===== I18N TRANSLATIONS =====
+const i18n = {
+  en: {
+    nav_about:'About', nav_pricing:'Pricing', nav_portfolio:'Portfolio', nav_reviews:'Reviews', nav_contact:'Contact',
+    hero_label:'Graphic Designer — Odesa, Ukraine',
+    hero_title:'Creating <em>brands</em> that stand out',
+    hero_desc:"I specialize in logo creation, brand identity development, and packaging design. Let's build a visual identity that's both modern and memorable.",
+    hero_cta:'Get in Touch',
+    hero_stat_likes:'Appreciations', hero_stat_views:'Project Views',
+    about_label:'01 / About', about_title:'A little about me',
+    about_p1:"My name is Anastasia, and I'm a graphic designer specializing in logo creation, brand identity development, and packaging design for your brand. I would be happy to help you create a unique visual identity that is both modern and memorable.",
+    about_p2:'Based in Odesa, Ukraine, I work with clients worldwide to bring their visions to life. Every project is a chance to tell a story through design — from elegant cosmetic clinics to vibrant flower shops and bold fashion labels.',
+    about_p3:"I use Figma, Adobe Illustrator, and Photoshop to craft every detail with precision and care. Reach out to me, and we'll make your project stand out.",
+    svc1_title:'Logo Design', svc1_desc:'Custom logotypes — from minimal wordmarks to detailed brand marks',
+    svc2_title:'Brand Identity', svc2_desc:'Complete visual systems: logo, colors, typography, patterns, guidelines',
+    svc3_title:'Packaging Design', svc3_desc:'Product packaging and labels that tell your story on the shelf',
+    svc4_title:'Social Media', svc4_desc:'Branded templates and visual content for your social channels',
+    pricing_label:'02 / Pricing', pricing_title:'Services & rates',
+    pricing_subtitle:'Transparent pricing for every stage of your brand journey',
+    price_std_name:'Logotype Standard', price_prem_name:'Logotype Premium', price_id_name:'Brand Identity',
+    price_cta:'Get Started',
+    meta_concepts:'Concepts', meta_revisions:'Revisions', meta_delivery:'Delivery',
+    portfolio_label:'03 / Portfolio', portfolio_title:'Selected projects',
+    portfolio_subtitle:'A curated selection of branding and identity projects from Behance',
+    reviews_label:'04 / Reviews', reviews_title:'Client feedback',
+    review1:'Anastasia designed an incredible logo for my cosmetology clinic. She immediately understood the aesthetic I was going for — clean, elegant, and professional. The final result exceeded all my expectations.',
+    review2:"Working with Nastia was an absolute pleasure. She developed a complete brand identity for our flower shop — from the logotype to packaging. Every element feels cohesive and truly represents our brand.",
+    review3:'We needed a logo for our clothing brand that conveyed both sophistication and approachability. Anastasia nailed it from the first concept. Highly professional, responsive, and creative.',
+    contact_label:'05 / Contact', contact_title:"Let's work together",
+    contact_desc:"Have a project in mind? I'm always open to new opportunities and interesting collaborations. Reach out through any of the channels below or use the form.",
+    cf_name:'Your name', cf_email:'Email address', cf_project:'Project type (e.g. Logo, Brand Identity)', cf_message:'Tell me about your project...', cf_submit:'Send Message',
+    footer_copy:'&copy; 2026 Anastasia Ambrosimova. All rights reserved.',
+    brief_label:'Design Brief', brief_title:"Let's start your project",
+    brief_subtitle:'Fill out this brief so I can better understand your vision and prepare the best concepts for you.',
+    brief_success_title:'Brief sent!', brief_success_desc:"Thank you! I've received your brief and will review it within 24 hours. I'll reach out to discuss your project soon.",
+    brief_back:'← Back', brief_next:'Next →', brief_submit:'Submit Brief',
+    brief_sending:'Sending...',
+    proj_view_behance:'View on Behance',
+    // comparison table
+    tbl_included:'What\'s included', tbl_concepts:'Logo concepts', tbl_revisions:'Free revisions',
+    tbl_color:'Color system (RGB & CMYK)', tbl_formats:'Logo formats (web & print)',
+    tbl_presentation:'Presentation with visualization', tbl_naming:'Brand colors & fonts naming',
+    tbl_items:'Brand identity items (tag, card, etc.)', tbl_pattern:'Brand graphics & pattern',
+    tbl_print:'Print-ready files', tbl_time:'Delivery time',
+  },
+  uk: {
+    nav_about:'Про мене', nav_pricing:'Ціни', nav_portfolio:'Портфоліо', nav_reviews:'Відгуки', nav_contact:'Контакти',
+    hero_label:'Графічний дизайнер — Одеса, Україна',
+    hero_title:'Створюю <em>бренди</em>, які запам\'ятовуються',
+    hero_desc:'Я спеціалізуюся на створенні логотипів, розробці фірмового стилю та дизайні упаковки. Давайте створимо візуальну ідентичність, яка буде сучасною та незабутньою.',
+    hero_cta:'Зв\'язатися',
+    hero_stat_likes:'Вподобань', hero_stat_views:'Переглядів',
+    about_label:'01 / Про мене', about_title:'Трохи про мене',
+    about_p1:'Мене звати Анастасія, я графічний дизайнер, який спеціалізується на створенні логотипів, розробці фірмового стилю та дизайні упаковки для вашого бренду. Буду рада допомогти створити унікальний візуальний образ — сучасний та запам\'ятовуваний.',
+    about_p2:'Живу в Одесі, Україна, працюю з клієнтами з усього світу. Кожен проєкт — це можливість розповісти історію через дизайн: від елегантних косметологічних клінік до яскравих квіткових магазинів та сміливих модних брендів.',
+    about_p3:'Я використовую Figma, Adobe Illustrator та Photoshop, щоб опрацювати кожну деталь з точністю та турботою. Напишіть мені, і ми зробимо ваш проєкт особливим.',
+    svc1_title:'Дизайн логотипу', svc1_desc:'Індивідуальні логотипи — від мінімалістичних до детальних',
+    svc2_title:'Фірмовий стиль', svc2_desc:'Повна візуальна система: лого, кольори, типографіка, патерни, гайдлайни',
+    svc3_title:'Дизайн упаковки', svc3_desc:'Упаковка та етикетки, що розповідають історію вашого бренду',
+    svc4_title:'Соціальні мережі', svc4_desc:'Брендовані шаблони та візуальний контент для ваших каналів',
+    pricing_label:'02 / Ціни', pricing_title:'Послуги та тарифи',
+    pricing_subtitle:'Прозоре ціноутворення для кожного етапу розвитку вашого бренду',
+    price_std_name:'Логотип Стандарт', price_prem_name:'Логотип Преміум', price_id_name:'Фірмовий стиль',
+    price_cta:'Замовити',
+    meta_concepts:'Концепцій', meta_revisions:'Правок', meta_delivery:'Термін',
+    portfolio_label:'03 / Портфоліо', portfolio_title:'Вибрані проєкти',
+    portfolio_subtitle:'Підбірка проєктів з брендингу та айдентики з Behance',
+    reviews_label:'04 / Відгуки', reviews_title:'Відгуки клієнтів',
+    review1:'Анастасія створила неймовірний логотип для моєї косметологічної клініки. Вона одразу зрозуміла естетику, яку я шукала — чисту, елегантну та професійну. Результат перевершив усі мої очікування.',
+    review2:'Працювати з Настею було суцільним задоволенням. Вона розробила повний фірмовий стиль для нашого квіткового магазину — від логотипу до упаковки. Кожен елемент виглядає цілісно та по-справжньому представляє наш бренд.',
+    review3:'Нам був потрібен логотип для бренду одягу, який передавав би одночасно вишуканість та доступність. Анастасія влучила з першого концепту. Дуже професійна, відповідальна та креативна.',
+    contact_label:'05 / Контакти', contact_title:'Давайте працювати разом',
+    contact_desc:'Маєте проєкт? Я завжди відкрита до нових можливостей та цікавих колаборацій. Зв\'яжіться зі мною через будь-який канал нижче або заповніть форму.',
+    cf_name:'Ваше ім\'я', cf_email:'Email адреса', cf_project:'Тип проєкту (напр. Лого, Фірмовий стиль)', cf_message:'Розкажіть про ваш проєкт...', cf_submit:'Надіслати',
+    footer_copy:'&copy; 2026 Анастасія Амбросімова. Усі права захищені.',
+    brief_label:'Бриф', brief_title:'Почнімо ваш проєкт',
+    brief_subtitle:'Заповніть цей бриф, щоб я краще зрозуміла ваше бачення та підготувала найкращі концепції.',
+    brief_success_title:'Бриф надіслано!', brief_success_desc:'Дякую! Я отримала ваш бриф і розгляну його протягом 24 годин. Незабаром зв\'яжусь з вами для обговорення проєкту.',
+    brief_back:'← Назад', brief_next:'Далі →', brief_submit:'Надіслати бриф',
+    brief_sending:'Надсилання...',
+    proj_view_behance:'Дивитися на Behance',
+    tbl_included:'Що входить', tbl_concepts:'Концепцій лого', tbl_revisions:'Безкоштовних правок',
+    tbl_color:'Колірна система (RGB і CMYK)', tbl_formats:'Формати лого (веб і друк)',
+    tbl_presentation:'Презентація з візуалізацією', tbl_naming:'Назви кольорів і шрифтів бренду',
+    tbl_items:'Елементи фірмового стилю (бірка, візитка тощо)', tbl_pattern:'Графіка та патерн бренду',
+    tbl_print:'Файли для друку', tbl_time:'Термін виконання',
+  },
+  ru: {
+    nav_about:'Обо мне', nav_pricing:'Цены', nav_portfolio:'Портфолио', nav_reviews:'Отзывы', nav_contact:'Контакты',
+    hero_label:'Графический дизайнер — Одесса, Украина',
+    hero_title:'Создаю <em>бренды</em>, которые запоминаются',
+    hero_desc:'Я специализируюсь на создании логотипов, разработке фирменного стиля и дизайне упаковки. Давайте создадим визуальную идентичность, которая будет современной и запоминающейся.',
+    hero_cta:'Связаться',
+    hero_stat_likes:'Оценок', hero_stat_views:'Просмотров',
+    about_label:'01 / Обо мне', about_title:'Немного обо мне',
+    about_p1:'Меня зовут Анастасия, я графический дизайнер, специализирующийся на создании логотипов, разработке фирменного стиля и дизайне упаковки для вашего бренда. Буду рада помочь создать уникальный визуальный образ — современный и запоминающийся.',
+    about_p2:'Живу в Одессе, Украина, работаю с клиентами со всего мира. Каждый проект — это возможность рассказать историю через дизайн: от элегантных косметологических клиник до ярких цветочных магазинов и смелых модных брендов.',
+    about_p3:'Я использую Figma, Adobe Illustrator и Photoshop, чтобы проработать каждую деталь с точностью и заботой. Напишите мне, и мы сделаем ваш проект особенным.',
+    svc1_title:'Дизайн логотипа', svc1_desc:'Индивидуальные логотипы — от минималистичных до детальных',
+    svc2_title:'Фирменный стиль', svc2_desc:'Полная визуальная система: лого, цвета, типографика, паттерны, гайдлайны',
+    svc3_title:'Дизайн упаковки', svc3_desc:'Упаковка и этикетки, которые рассказывают историю вашего бренда',
+    svc4_title:'Социальные сети', svc4_desc:'Брендированные шаблоны и визуальный контент для ваших каналов',
+    pricing_label:'02 / Цены', pricing_title:'Услуги и тарифы',
+    pricing_subtitle:'Прозрачное ценообразование на каждом этапе развития вашего бренда',
+    price_std_name:'Логотип Стандарт', price_prem_name:'Логотип Премиум', price_id_name:'Фирменный стиль',
+    price_cta:'Заказать',
+    meta_concepts:'Концепций', meta_revisions:'Правок', meta_delivery:'Срок',
+    portfolio_label:'03 / Портфолио', portfolio_title:'Избранные проекты',
+    portfolio_subtitle:'Подборка проектов по брендингу и айдентике с Behance',
+    reviews_label:'04 / Отзывы', reviews_title:'Отзывы клиентов',
+    review1:'Анастасия создала невероятный логотип для моей косметологической клиники. Она сразу поняла эстетику, которую я искала — чистую, элегантную и профессиональную. Результат превзошёл все мои ожидания.',
+    review2:'Работать с Настей было одним удовольствием. Она разработала полный фирменный стиль для нашего цветочного магазина — от логотипа до упаковки. Каждый элемент выглядит целостно и по-настоящему представляет наш бренд.',
+    review3:'Нам нужен был логотип для бренда одежды, который передавал бы одновременно утончённость и доступность. Анастасия попала в точку с первого концепта. Очень профессиональная, отзывчивая и креативная.',
+    contact_label:'05 / Контакты', contact_title:'Давайте работать вместе',
+    contact_desc:'Есть проект? Я всегда открыта для новых возможностей и интересных коллабораций. Свяжитесь со мной через любой канал ниже или заполните форму.',
+    cf_name:'Ваше имя', cf_email:'Email адрес', cf_project:'Тип проекта (напр. Лого, Фирменный стиль)', cf_message:'Расскажите о вашем проекте...', cf_submit:'Отправить',
+    footer_copy:'&copy; 2026 Анастасия Амбросимова. Все права защищены.',
+    brief_label:'Бриф', brief_title:'Начнём ваш проект',
+    brief_subtitle:'Заполните этот бриф, чтобы я лучше поняла ваше видение и подготовила лучшие концепции.',
+    brief_success_title:'Бриф отправлен!', brief_success_desc:'Спасибо! Я получила ваш бриф и рассмотрю его в течение 24 часов. Скоро свяжусь с вами для обсуждения проекта.',
+    brief_back:'← Назад', brief_next:'Далее →', brief_submit:'Отправить бриф',
+    brief_sending:'Отправка...',
+    proj_view_behance:'Смотреть на Behance',
+    tbl_included:'Что входит', tbl_concepts:'Концепций лого', tbl_revisions:'Бесплатных правок',
+    tbl_color:'Цветовая система (RGB и CMYK)', tbl_formats:'Форматы лого (веб и печать)',
+    tbl_presentation:'Презентация с визуализацией', tbl_naming:'Названия цветов и шрифтов бренда',
+    tbl_items:'Элементы фирменного стиля (бирка, визитка и т.д.)', tbl_pattern:'Графика и паттерн бренда',
+    tbl_print:'Файлы для печати', tbl_time:'Срок выполнения',
+  }
+};
+
+let currentLang = 'en';
+
+function detectLang() {
+  const nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+  if (nav.startsWith('uk')) return 'uk';
+  if (nav.startsWith('ru')) return 'ru';
+  return 'en';
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = i18n[lang];
+  // Update text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  // Update innerHTML (for elements with <em> etc)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  // Update review texts
+  const reviewTexts = document.querySelectorAll('.review-text');
+  if (reviewTexts[0] && t.review1) reviewTexts[0].textContent = t.review1;
+  if (reviewTexts[1] && t.review2) reviewTexts[1].textContent = t.review2;
+  if (reviewTexts[2] && t.review3) reviewTexts[2].textContent = t.review3;
+  // Update comparison table
+  const tblCells = document.querySelectorAll('.pricing-table td:first-child');
+  const tblKeys = ['tbl_concepts','tbl_revisions','tbl_color','tbl_formats','tbl_presentation','tbl_naming','tbl_items','tbl_pattern','tbl_print','tbl_time'];
+  tblCells.forEach((td, i) => { if (t[tblKeys[i]]) td.textContent = t[tblKeys[i]]; });
+  const tblHeader = document.querySelector('.pricing-table th:first-child');
+  if (tblHeader && t.tbl_included) tblHeader.textContent = t.tbl_included;
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang.substring(0,2));
+  });
+  // Update html lang
+  document.documentElement.lang = lang === 'uk' ? 'uk' : lang === 'ru' ? 'ru' : 'en';
+  // Save preference
+  try { localStorage.setItem('amb_lang', lang); } catch(e) {}
+}
+
+// Init language on load
+(function() {
+  let lang;
+  try { lang = localStorage.getItem('amb_lang'); } catch(e) {}
+  if (!lang) lang = detectLang();
+  // Defer to after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setLang(lang); });
+  } else {
+    setLang(lang);
+  }
+})();
+// Preloader
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 1200);
+});
+
+// Nav scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile menu
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== PROJECT DETAIL MODAL =====
+const projects = [
+  {
+    name: 'Bulytska Clinic',
+    category: 'Cosmetology / Brand Identity',
+    behance: 'https://www.behance.net/gallery/242430763/COSMETOLOGY-CLINIC-logo-Bulytska-clinic',
+    date: 'January 2026',
+    likes: 64, views: 232,
+    tags: ['Clinic', 'Logo Design', 'Brand Identity', 'Cosmetology', 'Visual Identity', 'Social Media'],
+    desc: 'A refined visual identity for Bulytska Clinic, a modern cosmetology practice specializing in aesthetic procedures and skincare treatments. The brand needed to communicate professionalism, trust, and understated elegance. The logotype combines clean serif typography with a delicate graphic element, creating a mark that feels both medical and luxurious. The color palette of soft neutrals and muted gold reinforces the premium positioning while maintaining clinical credibility. The identity extends across business cards, appointment cards, social media templates, and clinic signage.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/949e1d242430763.696d33f5a6aa5.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/5d8ba1242430763.696d33f5ab75d.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d848c6242430763.696d33f5a85e1.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/fb73db242430763.696d33f5a7835.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/53bc70242430763.696d33f5aa35f.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/af7685242430763.696d33f5a9906.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/0d80b9242430763.696d33f5ac079.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/6fa733242430763.696d33f5aad0d.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/8deba8242430763.696d33f5ac7d5.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/f0c553242430763.696d33f5ad121.png'
+    ]
+  },
+  {
+    name: 'Bloom & Charm',
+    category: 'Flower Shop / Logotype',
+    behance: 'https://www.behance.net/gallery/242341705/FLOWER-SHOP-Bloom-Charm-logotype',
+    date: 'January 2026',
+    likes: 202, views: 1027,
+    tags: ['Flower', 'Flower Shop', 'Logo Design', 'Branding', 'Brand Identity', 'Floral', 'Adobe Illustrator'],
+    desc: 'Bloom & Charm is a boutique flower shop that curates seasonal arrangements and floral subscriptions. The brief called for a logotype that would feel organic yet sophisticated — something that could live on both a storefront sign and an Instagram story. The final mark features a custom hand-drawn floral element paired with elegant serif lettering. The warm, earthy color palette evokes natural beauty and craftsmanship. Brand applications include wrapping paper, ribbon stamps, care cards, and a cohesive social media presence.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/306297242341705.696ac38e599d6.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/9ac32e242341705.696ac38e5a9c5.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/601391242341705.696ac38e5b39a.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/175d5a242341705.696ac38e5e1c9.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/2a03b3242341705.696ac38e5b9fb.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/47a3f3242341705.696ac38e5c7a3.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/891c5e242341705.696ac38e5d903.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/6205ed242341705.696ac38e5c0d4.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/c40472242341705.696ac38e5e9f3.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/e64e66242341705.696ac38e5d059.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/f3eacd242341705.696ac38e5a39d.png'
+    ]
+  },
+  {
+    name: 'Magic Soul',
+    category: 'Esoteric / Brand Identity',
+    behance: 'https://www.behance.net/gallery/242188265/ESOTERIC-logotype-MAGIC-SOUL',
+    date: 'January 2026',
+    likes: 66, views: 185,
+    tags: ['Esoteric', 'Logo Design', 'Brand Identity', 'Mystical', 'Spiritual', 'Logotype'],
+    desc: 'Magic Soul is an esoteric brand offering spiritual goods, tarot readings, and holistic wellness products. The identity needed to balance mystical allure with modern accessibility — inviting rather than intimidating. The logotype incorporates celestial symbolism with fluid, organic letterforms that suggest both mystery and warmth. A deep, moody color palette of midnight tones accented with gold creates an atmosphere of ritual and refinement. The branding extends to packaging, candle labels, and social media templates that feel like portals to another world.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/7fc6f4242188265.Y3JvcCw1NzUzLDQ1MDAsMTEyNSww.png',
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/5257af235426107.Y3JvcCw1NzUzLDQ1MDAsMTIxMCww.png'
+    ]
+  },
+  {
+    name: 'Vela Pera',
+    category: 'Clothing Brand / Logotype',
+    behance: 'https://www.behance.net/gallery/242064033/CLOTHING-BRAND-logotype-VELA-PERA',
+    date: 'January 2026',
+    likes: 225, views: 1164,
+    tags: ['Clothing Brand', 'Logo Design', 'Fashion', 'Brand Identity', 'Logotype', 'Minimal'],
+    desc: 'Vela Pera is a contemporary clothing label that blends Mediterranean ease with urban edge. The challenge was to create a logotype that would feel equally at home on a woven label sewn into linen as on a bold storefront sign. The solution is a striking, geometric wordmark with custom-drawn letters that balance sharpness and flow. Subtle serif details add a timeless quality, while the confident spacing communicates modern luxury. The monochromatic identity system ensures versatility across fabric tags, shopping bags, lookbook layouts, and e-commerce.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/3047f3242064033.Y3JvcCwzNzYxLDI5NDEsNDA4Nyww.png'
+    ]
+  },
+  {
+    name: 'Frame Barbershop',
+    category: 'Barbershop / Logotype',
+    behance: 'https://www.behance.net/gallery/242058529/BARBERSHOP-FRAME-logotype',
+    date: 'January 2026',
+    likes: 54, views: 368,
+    tags: ['Barbershop', 'Logo Design', 'Brand Identity', 'Masculine', 'Grooming', 'Logotype'],
+    desc: 'Frame is a modern barbershop that redefines the grooming experience for men who appreciate both tradition and contemporary style. The logotype needed to project confidence and craftsmanship without falling into clichéd barbershop aesthetics. The result is a bold, structured wordmark framed by a geometric border element that evokes precision and attention to detail. Strong, angular letterforms communicate masculinity, while refined spacing and proportions keep the mark sophisticated. The identity works powerfully on signage, appointment cards, product labels, and social media.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/468eb3242058529.Y3JvcCw1NzUzLDQ1MDAsMCww.png'
+    ]
+  },
+  {
+    name: 'Verona Permanent Makeup',
+    category: 'Beauty / Logotype',
+    behance: 'https://www.behance.net/gallery/241820019/VERONA-PERMANENT-MAKEUP-logotype',
+    date: 'January 2026',
+    likes: 22, views: 57,
+    tags: ['Permanent Makeup', 'Beauty', 'Logo Design', 'Feminine', 'Elegant', 'Logotype'],
+    desc: 'Verona is a permanent makeup studio specializing in natural-looking brow, lip, and eyeliner treatments. The brand identity aims to reassure clients that permanent makeup can enhance beauty without looking artificial. The logotype features graceful, flowing letterforms inspired by classical Italian typography — a nod to the studio\'s name and its philosophy of timeless beauty. A warm, muted rose palette paired with cream tones creates a soft, welcoming feel. The identity is applied across consultation forms, aftercare cards, studio décor, and Instagram content.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/925f21241820019.Y3JvcCw0NTQ4LDM1NTcsMTczMyw4MjE.png'
+    ]
+  },
+  {
+    name: 'Apostle',
+    category: 'Windows & Doors / Logotype',
+    behance: 'https://www.behance.net/gallery/241752689/LOGO-FOR-A-WINDOWS-DOORS-STORE-APOSTLE',
+    date: 'January 2026',
+    likes: 157, views: 194,
+    tags: ['Windows', 'Doors', 'Logo Design', 'Architecture', 'Brand Identity', 'Construction'],
+    desc: 'Apostle is a premium windows and doors retailer that positions itself at the intersection of architectural craftsmanship and modern living. The challenge was to create a mark that conveys structural integrity and aesthetic sophistication without defaulting to generic construction imagery. The logotype uses architectural proportions — clean verticals and measured spacing that subtly reference window frames and doorways. A restrained serif typeface adds authority and permanence. The deep, grounded color palette speaks to quality materials and lasting design. Applications include showroom signage, product catalogs, business stationery, and vehicle branding.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/07bf7a241752689.Y3JvcCw1NzUzLDQ1MDAsMTAxMSww.png'
+    ]
+  },
+  {
+    name: 'Ampluar',
+    category: 'Jewelry / Packaging & Logotype',
+    behance: 'https://www.behance.net/gallery/235426107/AMPLUAR-LOGOTYPE-AND-PACKAGING-FOR-JEWELRY-BRAND',
+    date: 'December 2025',
+    likes: 10, views: 33,
+    tags: ['Jewelry', 'Packaging', 'Logo Design', 'Luxury', 'Brand Identity', 'Accessories'],
+    desc: 'Ampluar is a jewelry brand that celebrates quiet luxury — pieces designed for everyday elegance rather than statement moments. The visual identity mirrors this philosophy: a refined, minimal logotype with letters that feel hand-set and intentionally spaced, suggesting artisanal care. The packaging system brings the brand to life through tactile materials — textured papers, embossed logos, and satin ribbon closures. The muted color palette of champagne, soft grey, and warm ivory ensures that every touchpoint feels cohesive and precious. From ring boxes to tissue paper to hang tags, every detail reinforces the brand\'s commitment to understated beauty.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/5257af235426107.Y3JvcCw1NzUzLDQ1MDAsMTIxMCww.png'
+    ]
+  },
+  {
+    name: 'Madlen',
+    category: 'Café & Confectionery / Brand Identity',
+    behance: 'https://www.behance.net/gallery/222940173/kavjarnja-konditerska-MADLEN',
+    date: 'October 2025',
+    likes: 69, views: 123,
+    tags: ['Café', 'Confectionery', 'Logo Design', 'Branding', 'Pastry', 'Coffee Shop'],
+    desc: 'Madlen is a cozy café and confectionery where artisanal pastries meet specialty coffee. The brand needed to feel welcoming and handcrafted — the kind of place you\'d walk past and immediately want to step inside. The identity draws on the warmth of fresh baking: rich caramel tones, creamy whites, and touches of chocolate brown. The logotype has a slightly whimsical, hand-lettered quality that suggests recipes passed down through generations. Brand applications include menu boards, takeaway cups, pastry boxes, loyalty cards, and a charming window display identity that makes the café unmistakable from the street.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/2c673d222940173.Y3JvcCw1NzUzLDQ1MDAsMTAyNSww.jpg'
+    ]
+  },
+  {
+    name: 'Freedom Floral',
+    category: 'Flower Boutique / Brand Identity',
+    behance: 'https://www.behance.net/gallery/218102933/FREEDOM-FLORAL-identity-for-a-flowers-boutique',
+    date: 'September 2025',
+    likes: 32, views: 220,
+    tags: ['Flowers', 'Boutique', 'Logo Design', 'Branding', 'Floral', 'Identity'],
+    desc: 'Freedom Floral is a contemporary flower boutique that approaches floristry as an art form — each arrangement is a one-of-a-kind composition inspired by the season and the occasion. The visual identity captures this creative spirit through a logotype that balances botanical delicacy with bold confidence. Custom-drawn floral illustrations weave through the brand system, appearing on wrapping tissue, care cards, and social media. The color palette pairs deep forest green with blush pink and cream, creating a mood that is both lush and refined. The result is an identity that feels as fresh and intentional as the bouquets it represents.',
+    images: [
+      'https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/3e93c6218102933.Y3JvcCwzMjc4LDI1NjQsMzQ4LDIxOQ.jpg'
+    ]
+  }
+];
+
+let currentProj = 0;
+
+function openProj(idx) {
+  currentProj = idx;
+  renderProj(idx);
+  document.getElementById('projOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('projOverlay').scrollTop = 0;
+}
+
+function closeProj() {
+  document.getElementById('projOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderProj(idx) {
+  const p = projects[idx];
+  const prevIdx = (idx - 1 + projects.length) % projects.length;
+  const nextIdx = (idx + 1) % projects.length;
+
+  document.getElementById('projModal').innerHTML = `
+    <div class="proj-hero">
+      <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
+    </div>
+    <div class="proj-header">
+      <div class="proj-header-top">
+        <div>
+          <div class="proj-cat">${p.category}</div>
+          <h2 class="proj-h1">${p.name}</h2>
+        </div>
+        <div class="proj-meta">
+          <div class="proj-meta-item">
+            <div class="proj-meta-val">${p.likes}</div>
+            <div class="proj-meta-label">Likes</div>
+          </div>
+          <div class="proj-meta-item">
+            <div class="proj-meta-val">${p.views >= 1000 ? (p.views/1000).toFixed(1)+'K' : p.views}</div>
+            <div class="proj-meta-label">Views</div>
+          </div>
+          <div class="proj-meta-item">
+            <div class="proj-meta-val">${p.date}</div>
+            <div class="proj-meta-label">Published</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="proj-body">
+      <p class="proj-desc">${p.desc}</p>
+      <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+      <div class="proj-gallery">
+        ${p.images.slice(1).map(img => `<img src="${img}" alt="${p.name}" loading="lazy">`).join('')}
+      </div>
+    </div>
+    <div class="proj-footer">
+      <a href="${p.behance}" target="_blank" class="proj-behance-link">
+        ${i18n[currentLang].proj_view_behance}
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="proj-nav-btns">
+        <button class="proj-nav-btn" onclick="event.stopPropagation();openProj(${prevIdx})" title="${projects[prevIdx].name}">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="proj-nav-btn" onclick="event.stopPropagation();openProj(${nextIdx})" title="${projects[nextIdx].name}">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  `;
+  document.getElementById('projOverlay').scrollTop = 0;
+}
+
+// Close project on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('projOverlay').classList.contains('open')) {
+      closeProj();
+    } else {
+      closeBrief();
+    }
+  }
+  if (document.getElementById('projOverlay').classList.contains('open')) {
+    if (e.key === 'ArrowLeft') openProj((currentProj - 1 + projects.length) % projects.length);
+    if (e.key === 'ArrowRight') openProj((currentProj + 1) % projects.length);
+  }
+});
+
+// ===== BRIEF MODAL =====
+const BOT_TOKEN = '7958095430:AAHO5qeEQQ2h7tT1hiLFKBgsCTjsxkJx9Vk';
+const CHAT_ID = '383523598';
+
+let briefStep = 1;
+const totalSteps = 5;
+
+function openBrief(service) {
+  briefStep = 1;
+  updateBriefUI();
+  document.getElementById('briefOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Pre-select service
+  if (service) {
+    const sel = document.getElementById('briefService');
+    const map = { standard: 'Logotype Standard — $250', premium: 'Logotype Premium — $330', identity: 'Brand Identity — $450', packaging: 'Packaging Design', other: 'Other' };
+    if (sel) sel.value = map[service] || '';
+  }
+  // Reset
+  document.getElementById('briefSuccess').classList.remove('active');
+  document.getElementById('briefFooter').style.display = 'flex';
+  document.querySelectorAll('.brief-step').forEach(s => s.classList.remove('active'));
+  document.querySelector('[data-step="1"]').classList.add('active');
+  document.querySelector('.brief-progress').style.display = 'flex';
+}
+
+function closeBrief() {
+  document.getElementById('briefOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Helper: escape HTML for Telegram
+function esc(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Helper: get checked labels for a checkbox/radio group
+function getChecked(name) {
+  const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
+  return Array.from(checked).map(el => {
+    const lbl = document.querySelector(`label[for="${el.id}"]`);
+    return lbl ? lbl.textContent.trim() : el.value;
+  }).join(', ') || '—';
+}
+
+// Helper: scale value to text
+function scaleText(id, labels) {
+  const v = parseInt(document.getElementById(id)?.value || '3');
+  return labels[v - 1] || labels[2];
+}
+
+function briefNext() {
+  if (briefStep < totalSteps) {
+    briefStep++;
+    updateBriefUI();
+  } else {
+    // ===== COLLECT ALL DATA =====
+    const name = esc(document.getElementById('clientName')?.value || '—');
+    const email = esc(document.getElementById('clientEmail')?.value || '—');
+    const tg = esc(document.getElementById('clientTg')?.value || '—');
+    const insta = esc(document.getElementById('clientInsta')?.value || '—');
+    const service = esc(document.getElementById('briefService')?.value || '—');
+    const brand = esc(document.getElementById('clientBrand')?.value || '—');
+    const industry = esc(getChecked('industry'));
+    const desc = esc(document.getElementById('clientDesc')?.value || '—');
+    const website = esc(document.getElementById('clientWebsite')?.value || '—');
+    const styles = esc(getChecked('style'));
+    const colors = esc(getChecked('color'));
+    const femMasc = scaleText('scaleFemMasc', ['Feminine', 'Closer to feminine', 'Neutral', 'Closer to masculine', 'Masculine']);
+    const playSerious = scaleText('scalePlaySerious', ['Playful', 'Closer to playful', 'Balanced', 'Closer to serious', 'Serious']);
+    const classModern = scaleText('scaleClassModern', ['Classic', 'Closer to classic', 'Versatile', 'Closer to modern', 'Modern']);
+    const logoType = esc(getChecked('logotype'));
+    const elements = esc(document.getElementById('clientElements')?.value || '—');
+    const usage = esc(getChecked('usage'));
+    const refs = esc(document.getElementById('clientRefs')?.value || '—');
+    const deadline = esc(getChecked('deadline'));
+    const budget = esc(document.getElementById('clientBudget')?.value || '—');
+    const existing = esc(getChecked('existing'));
+    const notes = esc(document.getElementById('clientNotes')?.value || '—');
+    const source = esc(getChecked('source'));
+
+    // ===== FORMAT MESSAGE =====
+    const message =
+`🚀 <b>Новый бриф с сайта!</b>
+
+📋 <b>КОНТАКТЫ</b>
+Имя: ${name}
+Email: ${email}
+Telegram/WhatsApp: ${tg}
+Instagram: ${insta}
+Услуга: ${service}
+
+🏢 <b>О БИЗНЕСЕ</b>
+Бренд: ${brand}
+Ниша: ${industry}
+Описание: ${desc}
+Сайт: ${website}
+
+🎨 <b>ДИЗАЙН</b>
+Стиль: ${styles}
+Цвета: ${colors}
+Характер: ${femMasc} / ${playSerious} / ${classModern}
+
+✏️ <b>ЛОГОТИП</b>
+Тип: ${logoType}
+Элементы: ${elements}
+Использование: ${usage}
+Референсы: ${refs}
+
+📌 <b>ДЕТАЛИ</b>
+Дедлайн: ${deadline}
+Бюджет: ${budget}
+Сущ. лого: ${existing}
+Пожелания: ${notes}
+Откуда: ${source}`;
+
+    // ===== SEND TO TELEGRAM =====
+    const submitBtn = document.getElementById('briefNext');
+    submitBtn.textContent = i18n[currentLang].brief_sending;
+    submitBtn.disabled = true;
+
+    // Trim message to Telegram limit (4096 chars)
+    const trimmedMsg = message.length > 4090 ? message.substring(0, 4090) + '...' : message;
+
+    const url = 'https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage';
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: trimmedMsg,
+        parse_mode: 'HTML'
+      })
+    })
+    .then(function(response) {
+      return response.json().then(function(data) {
+        if (data.ok) {
+          document.querySelectorAll('.brief-step').forEach(function(s) { s.classList.remove('active'); });
+          document.getElementById('briefSuccess').classList.add('active');
+          document.getElementById('briefFooter').style.display = 'none';
+          document.querySelector('.brief-progress').style.display = 'none';
+        } else {
+          console.error('TG error:', data.description);
+          alert('Ошибка: ' + (data.description || 'Неизвестная ошибка') + '. Попробуйте позже.');
+          submitBtn.textContent = i18n[currentLang].brief_submit;
+          submitBtn.disabled = false;
+        }
+      });
+    })
+    .catch(function(error) {
+      console.error('Fetch error:', error);
+      alert('Ошибка сети: ' + error.message + '. Проверьте подключение.');
+      submitBtn.textContent = i18n[currentLang].brief_submit;
+      submitBtn.disabled = false;
+    });
+  }
+}
+
+function briefPrev() {
+  if (briefStep > 1) {
+    briefStep--;
+    updateBriefUI();
+  }
+}
+
+function updateBriefUI() {
+  document.querySelectorAll('.brief-step').forEach(s => s.classList.remove('active'));
+  const activeStep = document.querySelector(`[data-step="${briefStep}"]`);
+  if (activeStep) activeStep.classList.add('active');
+
+  const bars = document.querySelectorAll('.brief-progress-bar');
+  bars.forEach((bar, i) => {
+    bar.classList.remove('active', 'done');
+    if (i + 1 < briefStep) bar.classList.add('done');
+    else if (i + 1 === briefStep) bar.classList.add('active');
+  });
+
+  const backBtn = document.getElementById('briefBack');
+  const nextBtn = document.getElementById('briefNext');
+  backBtn.style.visibility = briefStep === 1 ? 'hidden' : 'visible';
+
+  if (briefStep === totalSteps) {
+    nextBtn.textContent = i18n[currentLang].brief_submit;
+    nextBtn.className = 'brief-btn brief-btn-submit';
+  } else {
+    nextBtn.textContent = i18n[currentLang].brief_next;
+    nextBtn.className = 'brief-btn brief-btn-next';
+  }
+
+  document.getElementById('briefModal').scrollTop = 0;
+}
+</script>
+</body>
+</html>
